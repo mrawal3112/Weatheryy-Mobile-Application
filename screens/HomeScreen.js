@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Image source={require('../assets/cloudy.png')} style={styles.logo} />
@@ -11,7 +11,7 @@ const HomeScreen = () => {
             </Text>
             <View>
                 <Text style={styles.description}>Get to know your weather information and radar precipitation forecast</Text>
-                <TouchableOpacity style={styles.startBtn}>
+                <TouchableOpacity style={styles.startBtn} onPress={() => navigation.navigate('Display')}>
                     <Text style={{ color: 'white' }}>Get Started</Text>
                 </TouchableOpacity>
             </View>
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     logo: {
         width: 175,
         height: 175,
-        marginTop: '50%'
+        marginTop: '25%'
     },
     heading: {
         fontSize: 25,
