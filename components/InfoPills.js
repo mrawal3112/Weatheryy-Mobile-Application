@@ -44,8 +44,8 @@ const InfoPills = ({ data }) => {
 
 const styles = StyleSheet.create({
     image: {
-        width: 60,
-        height: 60,
+        width: 40,
+        height: 40,
     },
     infoContainer: {
         backgroundColor: 'white',
@@ -63,13 +63,13 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
     },
     title: {
-        fontSize: 16,
+        fontSize: 14,
         color: '#de5fa0',
         textAlign: 'center',
         marginTop: 5
     },
     value: {
-        fontSize: 20,
+        fontSize: 16,
         textAlign: 'center'
     }
 })

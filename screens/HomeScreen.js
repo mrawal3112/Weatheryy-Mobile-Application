@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
     return (
+
         <View style={styles.container}>
             <Image source={require('../assets/cloudy.png')} style={styles.logo} />
             <Text style={styles.heading}>Discover the Weather of your city with

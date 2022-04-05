@@ -6,7 +6,7 @@ import DisplayScreen from './screens/DisplayScreen';
 
 const navigator = createStackNavigator({
   Home: HomeScreen,
-  Display: DisplayScreen
+  Display: DisplayScreen,
 },
   {
     initialRouteName: 'Home',

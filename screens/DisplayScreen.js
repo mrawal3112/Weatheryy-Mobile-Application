@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
 import * as Location from 'expo-location';
 import moment from 'moment';
 import InfoPills from '../components/InfoPills';
 import HourlyData from '../components/HourlyData';
+import WeeklyForecast from '../components/WeeklyForecast';
+import { ActivityIndicator } from 'react-native';
+import { Dimensions } from 'react-native';
 
+const { Height } = Dimensions.get('window')
 const DisplayScreen = () => {
     const [information, setInformation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -27,8 +31,10 @@ const DisplayScreen = () => {
     }, [])
 
     return (
-        <>
-            {weatherForecast && <View style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+            {!weatherForecast ? <View style={[styles.loaderContainer, styles.horizontal]} >
+                <ActivityIndicator size='large' color="#de5fa0" style={styles.loader} />
+            </View> : <View style={styles.container}>
                 <View style={{ margin: 15 }}>
                     <Text style={{ fontSize: 16 }}>{moment().format('MMMM Do YYYY')}</Text>
                     <Text style={{ fontSize: 30, marginTop: 5, color: '#de5fa0' }}>{information.name}</Text>
@@ -54,8 +60,12 @@ const DisplayScreen = () => {
                 <View>
                     <HourlyData data={weatherForecast} />
                 </View>
-            </View>}
-        </>
+                <View>
+                    <WeeklyForecast data={weatherForecast} />
+                </View>
+            </View>
+            }
+        </ScrollView >
     )
 
 }
@@ -77,10 +87,17 @@ const styles = StyleSheet.create({
     colors: {
         color: '#de5fa0',
         fontWeight: "bold"
-    }
-
-
+    },
+    loaderContainer: {
+        height: Height,
+        backgroundColor: '#fff'
+    },
+    horizontal: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: 'center',
+        paddingVertical: '95%',
+    },
 })
-
 
 export default DisplayScreen;
