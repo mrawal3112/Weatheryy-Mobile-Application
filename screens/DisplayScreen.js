@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
 import moment from 'moment';
 import InfoPills from '../components/InfoPills';
@@ -7,11 +7,11 @@ import HourlyData from '../components/HourlyData';
 import WeeklyForecast from '../components/WeeklyForecast';
 import { ActivityIndicator } from 'react-native';
 import { Dimensions } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const { Height } = Dimensions.get('window')
 const DisplayScreen = () => {
     const [information, setInformation] = useState(null);
-    const [errorMsg, setErrorMsg] = useState(null);
     const [weatherForecast, setWeatherForecast] = useState(null)
     const API_KEY = '127e886467e938b1f62145c8b4ddbc2f';
     useEffect(() => {
@@ -98,6 +98,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: '95%',
     },
+    search: { marginHorizontal: 20 }
 })
+
+DisplayScreen.navigationOptions = ({ navigation }) => {
+    return {
+        headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+                <FontAwesome5 name="search-location" size={24} style={styles.search} />
+            </TouchableOpacity>
+        )
+    }
+};
 
 export default DisplayScreen;
