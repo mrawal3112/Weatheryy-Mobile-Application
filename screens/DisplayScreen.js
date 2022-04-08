@@ -10,10 +10,12 @@ import { Dimensions } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 const { Height } = Dimensions.get('window')
-const DisplayScreen = () => {
+const DisplayScreen = ({ navigation }) => {
     const [information, setInformation] = useState(null);
     const [weatherForecast, setWeatherForecast] = useState(null)
     const API_KEY = '127e886467e938b1f62145c8b4ddbc2f';
+    const locate = navigation.getParam('location');
+
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -22,13 +24,12 @@ const DisplayScreen = () => {
                 return;
             }
             let location = await Location.getCurrentPositionAsync({});
-            const CityInfo = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=${API_KEY}&units=metric`).then(response => response.json());
+            const CityInfo = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${!locate ? location.coords.latitude : locate.lat}&lon=${!locate ? location.coords.longitude : locate.lng}&appid=${API_KEY}&units=metric`).then(response => response.json());
             setInformation(CityInfo)
-            const weatherData = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${location.coords.latitude}&lon=${location.coords.longitude}&exclude=alerts,minutely&appid=${API_KEY}&units=metric`).then(response => response.json())
+            const weatherData = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${!locate ? location.coords.latitude : locate.lat}&lon=${!locate ? location.coords.longitude : locate.lng}&exclude=alerts,minutely&appid=${API_KEY}&units=metric`).then(response => response.json())
             setWeatherForecast(weatherData);
-            //  
         })();
-    }, [])
+    }, [locate])
 
     return (
         <ScrollView showsVerticalScrollIndicator={false}>

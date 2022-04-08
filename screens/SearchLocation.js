@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Button } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
-// import {
-//     HeaderSearchBar,
-//     HeaderClassicSearchBar
-// } from "react-native-header-search-bar";
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 
-const SearchLocation = () => {
-    const [location, setLocation] = useState('')
+const SearchLocation = ({ navigation }) => {
+    const [location, setLocation] = useState('');
     return (
-        <View>
-            {/* <HeaderClassicSearchBar onChangeText={text => console.log(text)} /> */}
+        <View style={{ height: 400 }}>
             <Text style={styles.title}>Weather</Text>
-            <View style={styles.Container}>
-                <EvilIcons name="search" size={24} color="#ADADC9" style={{ padding: 7 }} />
-                <TextInput placeholder='Search for a city or airport' style={styles.inputField}
-                    value={location} onChangeText={(newInput) => setLocation(newInput)}
-                    autoCapitalize='none' autoCorrect={false}></TextInput>
-            </View>
-            {console.log(location)}
+            <GooglePlacesAutocomplete placeholder='Search' fetchDetails={true}
+                onPress={(data, details = null) => {
+                    setLocation(details.geometry.location)
+                }}
+                query={{
+                    key: 'MY_SECRET_KEY',
+                    language: 'en',
+                }}
+            />
+            <Button title='Search' style={{ marginBottom: 50 }} onPress={() => navigation.navigate('Display', { location })} />
         </View>
     )
 }
@@ -51,3 +50,6 @@ SearchLocation.navigationOptions = () => {
 };
 
 export default SearchLocation;
+
+
+// 

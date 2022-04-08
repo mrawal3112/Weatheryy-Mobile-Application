@@ -8,7 +8,7 @@ import SearchLocation from './screens/SearchLocation';
 const navigator = createStackNavigator({
   Home: HomeScreen,
   Display: DisplayScreen,
-  Search: SearchLocation,
+  Search: SearchLocation
 },
   {
     initialRouteName: 'Home',
